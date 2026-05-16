@@ -14,12 +14,12 @@ public class Atraccion {
     private int contadorVisitantes;
     private int tiempoEspera;
     private EstadoAtraccion estadoAtraccion;
-    private int codigoOperador;
-    private ArrayList<Atraccion> listaAtracciones;
+    private ArrayList<Operador> listaOperadoresAsignados;
     private ArrayList<Visitante> listaVisitantes;
+    private String motivoCierre;
 
 
-    public Atraccion(String id, String nombre, TipoAtraccion tipoAtraccion, int capacidadMax, double alturaMin, int edadMin, double costoAdicional, int contadorVisitantes, int tiempoEspera, EstadoAtraccion estadoAtraccion, int codigoOperador, ArrayList<Atraccion> listaAtracciones, ArrayList<Visitante> listaVisitantes) {
+    public Atraccion(String id, String nombre, TipoAtraccion tipoAtraccion, int capacidadMax, double alturaMin, int edadMin, double costoAdicional, int contadorVisitantes, int tiempoEspera, EstadoAtraccion estadoAtraccion, ArrayList <Operador> listaOperadoresAsignados, ArrayList<Visitante> listaVisitantes, String motivoCierre ) {
         this.id = id;
         this.nombre = nombre;
         this.tipoAtraccion = tipoAtraccion;
@@ -30,10 +30,75 @@ public class Atraccion {
         this.contadorVisitantes = contadorVisitantes;
         this.tiempoEspera = tiempoEspera;
         this.estadoAtraccion = estadoAtraccion;
-        this.codigoOperador = codigoOperador;
-        this.listaAtracciones = listaAtracciones;
+        this.listaOperadoresAsignados= listaOperadoresAsignados;
         this.listaVisitantes = listaVisitantes;
+        this.motivoCierre = motivoCierre;
     }
+
+    public boolean estaDisponible () {
+        return this.estadoAtraccion == EstadoAtraccion.ACTIVA;
+        }
+
+    public boolean tieneOperador () {
+        for (Operador operador : listaOperadoresAsignados) {
+            return true;
+        } return false;
+    }
+
+    public boolean asignarOperador (Operador operador) {
+        for (Operador o: listaOperadoresAsignados) {
+            if (o.getDocumento().equals(operador.getDocumento())) {
+                return false;
+            }
+        } listaOperadores.add (operador);
+        return true;
+    }
+
+    public void cambiarEstado (EstadoAtraccion estadoAtraccion, String motivo) {
+        this.estadoAtraccion = estadoAtraccion;
+        if (estadoAtraccion == EstadoAtraccion.ACTIVA) {
+            this.motivoCierre = null;
+        } else {
+            this.motivoCierre = motivo;
+        }
+    }
+
+    public boolean registrarRevisionTecnica () {
+        if (this.estadoAtraccion == EstadoAtraccion.EN_MANTENIMIENTO) {
+            cambiarEstado (EstadoAtraccion.ACTIVA, null);
+            contadorVisitantes = 0;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean registrarIngreso () {
+        contadorVisitantes = contadorVisitantes ++;
+        if (contadorVisitantes == 500) {
+            cambiarEstado(EstadoAtraccion.EN_MANTENIMIENTO, "Mantenimiento preventivo");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean validarAcceso (Visitante visitante) {
+        if (!estaDisponible()) {
+            return false;
+        }
+        if (visitante.getEdad() < this.edadMin) {
+            return false;
+        }
+        if (visitante.getEstatura() < this.alturaMin) {
+            return false;
+        }
+        if (this.costoAdicional > 0 && visitante.getTicket() instanceof TicketGeneral) {
+            if (visitante.getSaldoVirtual() < this.costoAdicional) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public double getAlturaMin() {
         return alturaMin;
@@ -114,21 +179,20 @@ public class Atraccion {
     public void setEstadoAtraccion(EstadoAtraccion estadoAtraccion) {
         this.estadoAtraccion = estadoAtraccion;
     }
-
-    public int getCodigoOperador() {
-        return codigoOperador;
+    public ArrayList<Operador> getListaOperadoresAsignados () {
+        return listaOperadoresAsignados;
     }
 
-    public void setCodigoOperador(int codigoOperador) {
-        this.codigoOperador = codigoOperador;
+    public void setListaOperadoresAsiganados (ArrayList<Operador> listaOperadoresAsiganados) {
+        this.listaOperadoresAsignados = listaOperadoresAsignados ;
     }
 
-    public ArrayList<Atraccion> getListaAtracciones() {
-        return listaAtracciones;
+    public String getMotivoCierre() {
+        return motivoCierre;
     }
 
-    public void setListaAtracciones(ArrayList<Atraccion> listaAtracciones) {
-        this.listaAtracciones = listaAtracciones;
+    public void setMotivoCierre(String motivoCierre) {
+        this.motivoCierre = motivoCierre;
     }
 }
 
