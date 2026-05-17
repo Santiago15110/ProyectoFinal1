@@ -1,7 +1,6 @@
-package org.example.Model;
+package org.example.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Atraccion {
     private String id;

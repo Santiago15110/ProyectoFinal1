@@ -1,8 +1,5 @@
-package org.example.Model;
+package org.example.model;
 
-import jdk.jfr.DataAmount;
-
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class Visitante extends Persona {

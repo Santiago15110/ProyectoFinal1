@@ -1,4 +1,4 @@
-package org.example.Model;
+package org.example.model;
 
 public class Operador extends Persona {
     private String codigoOperador;

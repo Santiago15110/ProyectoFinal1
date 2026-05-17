@@ -1,4 +1,4 @@
-package org.example.Model;
+package org.example.model;
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;

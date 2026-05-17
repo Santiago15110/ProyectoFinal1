@@ -1,5 +1,6 @@
-package org.example.Model;
+package org.example.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Administrador extends Persona {
@@ -115,4 +116,7 @@ public class Administrador extends Persona {
                 +" | Cedula: " + getCedula()
                 + " | Codigo de Admin" +getCodigoAdmin();
     }
+
+
+
 }
