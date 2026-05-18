@@ -17,6 +17,13 @@ public class ParqueDiversiones {
     private ArrayList<TicketFamiliar> listTicketFamiliar;
     private ArrayList<TicketFast> listTicketFast;
 
+    //contadores para generar codigo autamoticamente
+
+    private int contadorAdmin= 0;
+    private int contadorOperador= 0;
+    private int contadorZonas = 0;
+    private int contadorNotificacion = 0;
+
     public ParqueDiversiones(String nombre, int capacidadMax) {
         this.nombre=nombre;
         this.capacidadMax=capacidadMax;
@@ -30,6 +37,30 @@ public class ParqueDiversiones {
         listaAtracciones = new ArrayList<>();
 
     }
+
+    //Metodos para generar codigo
+
+    public String generarCodigoNotificacion(){
+
+     contadorNotificacion++;
+
+     return "N-" + contadorNotificacion;
+    }
+
+    //Metodo para generar  codigo Admin
+
+    public String generarCodigoAdmin(){
+        contadorAdmin++;
+        return "A-" + contadorAdmin;
+    }
+
+    public String generarCodigoZona(){
+
+        contadorZonas++;
+        return "Z-"+contadorZonas;
+    }
+
+
 
 
 
@@ -443,6 +474,60 @@ public class ParqueDiversiones {
             return false;
 
     }
+
+
+    public boolean actualizarAtraccion(String codigoZona, String codigoAtraccion, String nuevoNombre, TipoAtraccion nuevoTipoAtraccion, int nuevaCapacidad, double nuevaAlturaMin, int nuevaEdadMin, double nuevoCostoAdicional, int nuevoTiempoEspera){
+
+        Zona zona = buscarZonaByCodigo(codigo);
+
+        if(zona!=  null){
+            zona.actualizarAtraccion(codigoAtraccion);
+            return true;
+        }
+
+        return false;
+
+    }
+
+
+    //Metodo para activar la alarma
+
+
+    public boolean activarAlarma(){
+
+
+        for(Zona z: listaZonas){
+            for(Atraccion a: z.getListaAtracciones()){
+                if(a.getTipoAtraccion() == TipoAtraccion.ACUATICA || a.getTipoAtraccion() == TipoAtraccion.MECANICA){
+                    a.cambiarEstado(EstadoAtraccion.CERRADA, "Se cerró por el clima");
+                }
+            }
+        }
+
+
+        if(listaVisitantes.isEmpty()){
+            return false;
+        }
+
+            Notificacion notificacion = new Notificacion("Tormenta eléctrica fuerte, atracciones mecánicas y acuaticas cerradas hasta nuevo aviso", generarCodigoNotificacion(), LocalDate.now(), TipoNoti.CLIMA);
+
+            for(Visitante v: listaVisitantes){
+                if(v.getTheTicket() != null){
+                    v.recibirNotificacion(notificacion);
+
+                }
+            }
+
+
+
+        return true;
+
+    }
+
+
+
+
+
 
 
 

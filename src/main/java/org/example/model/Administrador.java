@@ -108,6 +108,17 @@ public class Administrador extends Persona {
 
 
 
+    public boolean activarAlarma(){
+
+        if(parque == null){
+            return false;
+        }
+
+        return parque.activarAlarma();
+    }
+
+
+
 
 
     @Override
