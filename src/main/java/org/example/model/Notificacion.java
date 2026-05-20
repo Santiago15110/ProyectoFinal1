@@ -7,14 +7,14 @@ public class Notificacion {
     private String codigo;
     private String mensaje;
     private LocalDate fecha;
-    private TipoAtraccion tipoAtraccion;
+    private TipoNoti tipoNoti;
 
 
-    public Notificacion(String mensaje, String codigo, LocalDate fecha, TipoAtraccion tipoAtraccion) {
+    public Notificacion(String mensaje, String codigo, LocalDate fecha, TipoNoti tipoNoti) {
         this.mensaje = mensaje;
         this.codigo = codigo;
         this.fecha = fecha;
-        this.tipoAtraccion = tipoAtraccion;
+        this.tipoNoti = tipoNoti;
     }
 
 
@@ -26,12 +26,13 @@ public class Notificacion {
         this.codigo = codigo;
     }
 
-    public TipoAtraccion getTipoAtraccion() {
-        return tipoAtraccion;
+
+    public TipoNoti getTipoNoti() {
+        return tipoNoti;
     }
 
-    public void setTipoAtraccion(TipoAtraccion tipoAtraccion) {
-        this.tipoAtraccion = tipoAtraccion;
+    public void setTipoNoti(TipoNoti tipoNoti) {
+        this.tipoNoti = tipoNoti;
     }
 
     public LocalDate getFecha() {

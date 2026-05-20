@@ -3,5 +3,6 @@ package org.example.model;
 public enum TipoNoti {
 
     SHOW,
-    ATRACCION
+    ATRACCION,
+    CLIMA;
 }
