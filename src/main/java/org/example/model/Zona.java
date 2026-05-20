@@ -7,17 +7,87 @@ public class Zona {
     private int capacidadMax;
     private ArrayList<Atraccion> listaAtracciones;
     private ArrayList<Operador> listaOperadores;
+    private int codigoZona;
 
-    public Zona (String nombre, int capacidadMax,ArrayList<Atraccion> listaAtracciones, ArrayList<Operador> listaOperadores) {
+    public Zona (String nombre, int capacidadMax, int codigoZona) {
         this.nombre = nombre;
         this.capacidadMax = capacidadMax;
-        this.listaAtracciones = listaAtracciones;
-        this.listaOperadores = listaOperadores;
+        this.listaAtracciones = new ArrayList<>();
+        this.listaOperadores = new ArrayList<>();
+        this.codigoZona = codigoZona;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Atraccion buscarAtraccionByCodigo (String codigoAtraccion) {
+
+        for (Atraccion a: listaAtracciones) {
+            if (a.getCodigoAtraccion().equals(codigoAtraccion)) {
+                return a;
+            }
+        }
+        return null;
     }
+
+    public boolean agregarAtraccion (Atraccion atraccion) {
+
+        if (atraccion == null) {
+            return false;
+        }
+        listaAtracciones.add(atraccion);
+
+        return true;
+    }
+
+    public boolean eliminarAtraccion (String codigoAtraccion) {
+
+        Atraccion atraccion = buscarAtraccionByCodigo(codigoAtraccion);
+
+        if(atraccion!=null) {
+
+            listaAtracciones.remove(atraccion);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean agregarOperador (Operador operador) {
+        for (Operador o : listaOperadores) {
+            if (o.getCedula().equals(operador.getCedula())) {
+                return false;
+            }
+        }
+        listaOperadores.add(operador);
+        return true;
+    }
+
+    public int calcularVisitantesActuales () {
+        int total = 0;
+        for (Atraccion a : listaAtracciones) {
+            total = total + a.getContadorVisitantes();
+        }
+        return total;
+    }
+    public boolean estaDisponible () {
+        if (calcularVisitantesActuales() < capacidadMax) {
+            return true;
+        }
+        return false;
+    }
+    public boolean validarAcceso (Visitante visitante) {
+        if (estaDisponible()) {
+            return true;
+        }
+        return false;
+    }
+
+    public String generarReporte () {
+        return "Zona: " + nombre +
+                "\nCapacidad Maxina: " +capacidadMax +
+                "\nVisitantes actuales: " +calcularVisitantesActuales() +
+                "\nAtracciones disponibles: " +listaAtracciones.size();
+    }
+
+
+    public String getNombre() { return nombre; }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -46,4 +116,8 @@ public class Zona {
     public void setListaOperadores(ArrayList<Operador> listaOperadores) {
         this.listaOperadores = listaOperadores;
     }
+
+    public int getCodigoZona() { return codigoZona; }
+
+    public void setCodigoZona(int codigoZona) { this.codigoZona = codigoZona; }
 }

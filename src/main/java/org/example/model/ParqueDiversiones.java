@@ -31,14 +31,12 @@ public class ParqueDiversiones {
 
     }
 
-
-
     //Crud Visitante
 
     //Metodo para agregar Visitante
 
 
-    public boolean agregarVisitante(String nombre, String cedula, int edad, double estatura, double saldoVirtual){
+    public boolean agregarVisitante(String nombre, String cedula, int edad, double estatura, double saldoVirtual) {
 
         Visitante newVisitante = new Visitante(nombre, cedula, edad, estatura, saldoVirtual);
 
@@ -93,6 +91,7 @@ public class ParqueDiversiones {
     }
 
   // metodo para mostrar visitante    determinar si es aplicable en java fx
+
     public String mostrarVisitante(String cedula){
 
         Visitante visitante = buscarVisitanteByCedula(cedula);
@@ -106,6 +105,7 @@ public class ParqueDiversiones {
 
 
     //Metodo para mostrar lista de visitantes    determinar si es aplicable en java fx
+
     public String mostrarListaVisitantes(){
 
         String lista = "";
@@ -126,7 +126,6 @@ public class ParqueDiversiones {
 
     //Metodo para busccar un visitante por cedula
 
-
     public Visitante buscarVisitanteByCedula(String cedula){
 
         for(Visitante v: listaVisitantes){
@@ -137,8 +136,6 @@ public class ParqueDiversiones {
 
         return null;
     }
-
-
 
 
     // Crud Administrador
@@ -181,7 +178,7 @@ public class ParqueDiversiones {
 
         Administrador admin = buscarAdminByCodigo(codigo);
 
-        if(admin != null){
+        if (admin != null) {
             admin.setNombre(nombre);
             admin.setCedula(cedula);
             return true;
@@ -195,7 +192,7 @@ public class ParqueDiversiones {
 
         //metodo para mostrar admin
 
-    public String mostrarAdmin(String codigo){
+    public String mostrarAdmin(String codigo) {
 
         Administrador admin = buscarAdminByCodigo(codigo);
 

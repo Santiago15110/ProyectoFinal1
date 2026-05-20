@@ -3,7 +3,7 @@ package org.example.model;
 import java.util.ArrayList;
 
 public class Atraccion {
-    private String id;
+    private String codigoAtraccion;
     private String nombre;
     private TipoAtraccion tipoAtraccion;
     private int capacidadMax;
@@ -18,8 +18,8 @@ public class Atraccion {
     private String motivoCierre;
 
 
-    public Atraccion(String id, String nombre, TipoAtraccion tipoAtraccion, int capacidadMax, double alturaMin, int edadMin, double costoAdicional, int contadorVisitantes, int tiempoEspera, EstadoAtraccion estadoAtraccion, ArrayList <Operador> listaOperadoresAsignados, ArrayList<Visitante> listaVisitantes, String motivoCierre ) {
-        this.id = id;
+    public Atraccion(String codigoAtraccion, String nombre, TipoAtraccion tipoAtraccion, int capacidadMax, double alturaMin, int edadMin, double costoAdicional, int contadorVisitantes, int tiempoEspera, EstadoAtraccion estadoAtraccion, String motivoCierre ) {
+        this.codigoAtraccion = codigoAtraccion;
         this.nombre = nombre;
         this.tipoAtraccion = tipoAtraccion;
         this.capacidadMax = capacidadMax;
@@ -29,8 +29,8 @@ public class Atraccion {
         this.contadorVisitantes = contadorVisitantes;
         this.tiempoEspera = tiempoEspera;
         this.estadoAtraccion = estadoAtraccion;
-        this.listaOperadoresAsignados= listaOperadoresAsignados;
-        this.listaVisitantes = listaVisitantes;
+        this.listaOperadoresAsignados= new ArrayList<>();
+        this.listaVisitantes = new ArrayList<>();
         this.motivoCierre = motivoCierre;
     }
 
@@ -46,10 +46,10 @@ public class Atraccion {
 
     public boolean asignarOperador (Operador operador) {
         for (Operador o: listaOperadoresAsignados) {
-            if (o.getDocumento().equals(operador.getDocumento())) {
+            if (o.getCedula().equals(operador.getCedula())) {
                 return false;
             }
-        } listaOperadores.add (operador);
+        } listaOperadoresAsignados.add (operador);
         return true;
     }
 
@@ -62,15 +62,6 @@ public class Atraccion {
         }
     }
 
-    public boolean registrarRevisionTecnica () {
-        if (this.estadoAtraccion == EstadoAtraccion.EN_MANTENIMIENTO) {
-            cambiarEstado (EstadoAtraccion.ACTIVA, null);
-            contadorVisitantes = 0;
-            return true;
-        }
-        return false;
-    }
-
     public boolean registrarIngreso () {
         contadorVisitantes = contadorVisitantes ++;
         if (contadorVisitantes == 500) {
@@ -78,6 +69,15 @@ public class Atraccion {
             return false;
         }
         return true;
+    }
+
+    public boolean registrarRevisionTecnica () {
+        if (this.estadoAtraccion == EstadoAtraccion.EN_MANTENIMIENTO) {
+            cambiarEstado (EstadoAtraccion.ACTIVA, null);
+            contadorVisitantes = 0;
+            return true;
+        }
+        return false;
     }
 
     public boolean validarAcceso (Visitante visitante) {
@@ -107,13 +107,11 @@ public class Atraccion {
         this.alturaMin = alturaMin;
     }
 
-    public String getId() {
-        return id;
+    public String getCodigoAtraccion() {
+        return codigoAtraccion;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setCodigoAtraccion(String codigoAtraccion) { this.codigoAtraccion = codigoAtraccion; }
 
     public String getNombre() {
         return nombre;

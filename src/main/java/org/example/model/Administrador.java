@@ -12,7 +12,7 @@ public class Administrador extends Persona {
         super(nombre, cedula);
         this.codigoAdmin= codigoAdmin;
         this.parque=null;
-            }
+    }
 
     public String getCodigoAdmin() {
         return codigoAdmin;
