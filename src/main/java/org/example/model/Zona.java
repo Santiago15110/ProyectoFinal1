@@ -7,9 +7,9 @@ public class Zona {
     private int capacidadMax;
     private ArrayList<Atraccion> listaAtracciones;
     private ArrayList<Operador> listaOperadores;
-    private int codigoZona;
+    private String codigoZona;
 
-    public Zona (String nombre, int capacidadMax, int codigoZona) {
+    public Zona (String nombre, int capacidadMax,String codigoZona) {
         this.nombre = nombre;
         this.capacidadMax = capacidadMax;
         this.listaAtracciones = new ArrayList<>();
@@ -26,6 +26,8 @@ public class Zona {
         }
         return null;
     }
+
+    //Metodo para agregar atraccion
 
     public boolean agregarAtraccion (Atraccion atraccion) {
 
@@ -117,7 +119,7 @@ public class Zona {
         this.listaOperadores = listaOperadores;
     }
 
-    public int getCodigoZona() { return codigoZona; }
+    public String getCodigoZona() { return codigoZona; }
 
-    public void setCodigoZona(int codigoZona) { this.codigoZona = codigoZona; }
+    public void setCodigoZona(String codigoZona) { this.codigoZona = codigoZona; }
 }
